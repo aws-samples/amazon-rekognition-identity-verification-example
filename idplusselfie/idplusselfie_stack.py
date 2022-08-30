@@ -23,7 +23,7 @@ class idplusselfieStack(Stack):
         ips_lambda.add_to_role_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
             actions=[
-                'rekognition:*',
+                'rekognition:CompareFaces',
             ],
             resources=[
                 '*'
