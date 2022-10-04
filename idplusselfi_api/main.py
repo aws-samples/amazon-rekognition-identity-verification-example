@@ -2,9 +2,9 @@ import requests
 from base64 import b64encode
 from json import dumps
 
-SOURCE = 'angela_orth.png'
-TARGET = 'NY_Drivers_License_Angela_Orth.png'
-URL = " https://3lpjx20498.execute-api.us-east-1.amazonaws.com/prod/ips"
+SOURCE = "idplusselfi_api\\NY_Drivers_License_Angela_Orth.png"
+TARGET = "idplusselfi_api\\angela_orth.png"
+URL = "https://<your api gateway>.<your region>.amazonaws.com/prod/ips"
 ENCODING = 'utf-8'
 JSON_NAME = 'output.json'
 
@@ -24,8 +24,8 @@ t_base64_string = t_base64_bytes.decode(ENCODING)
 
 # make raw data for json
 raw_data = {
-    "selfie": s_base64_string,
-    "dl": t_base64_string
+    "dl": s_base64_string,
+    "selfie": t_base64_string
 }
 
 # now: encoding the data to json

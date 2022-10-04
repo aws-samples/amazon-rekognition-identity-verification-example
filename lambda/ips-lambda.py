@@ -13,8 +13,8 @@ def lambda_handler(event, context):
   dl = payload_dict['dl']
 
   # convert text to base64
-  s_base64 = selfie.encode('utf-8')
-  t_base64 = dl.encode('utf-8')
+  s_base64 = dl.encode('utf-8')
+  t_base64 = selfie.encode('utf-8')
   #convert base64 to bytes
   s_bytes = base64.b64decode(s_base64)
   t_bytes = base64.b64decode(t_base64)
