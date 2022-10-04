@@ -1,17 +1,16 @@
 
 # ID Plus Selfie Identity Verification with Amazon Rekognition
 
-The “ID + Selfie” design pattern is the comparison of the face in the selfie to the face(s) on the identification document. For this, we use the Amazon Rekognition CompareFaces API. The API compares a face in the source input image with a face or faces detected in the target input image.
-In the example below, we compare a selfie with a sample South Carolina Real ID driver’s license.
+A solution to digitally verfiy a users identity using Amazon Rekognition.
 
 Source                     | Target
 :-------------------------:|:-------------------------:
-![Source](../../../Users/donnoah/Downloads/selfieplusid/Documentation/readme_images/idplusselfie_selfie.png) | ![Target](../../../Users/donnoah/Downloads/selfieplusid/Documentation/readme_images/idplusselfie_dl.jpg)
+![Source](../amazon-rekognition-identity-verification-example/Documentation/readme_images/idplusselfie_dl.jpg) | ![Target](../amazon-rekognition-identity-verification-example/Documentation/readme_images/idplusselfie_selfie.png)
 ## Flow
 A user submits an POST call to a REST api with the source and target. Source being the selfie and target
 the users drivers license.  Identity matching occurs on the backend and a confidence percentage is returned.
 
-![Diagram](../../../Users/donnoah/Downloads/selfieplusid/Documentation/readme_images/idplusselfie_diagram.jpg)
+![Diagram](../amazon-rekognition-identity-verification-example/Documentation/readme_images/idplusselfie_diagram.jpg)
 
 ## Deploy the project
 This project is available to deploy through AWS CDK <repo link>.  You can clone the repository and use the following CDK process to deploy to your local AWS account.
@@ -27,54 +26,16 @@ This project is available to deploy through AWS CDK <repo link>.  You can clone 
 6. After activating the virtual environment install the app’s standard dependencies:
 python -m pip install -r requirements.txt
 7. Now that the environment is setup and the requirements are met we can issue the AWS CDK deployment command to deploy this project to AWS
+```
 CDK Deploy
+```
 
 ## Making API Calls
-We need to send the payload in base64 format to the rest endpoint.  We use a python file to make the api call which allows us to open the source and target files, convert them to base64 and send the payload to the api gateway.  This code is available in the repository.  
+We need to send the payload in base64 format to the rest endpoint.  We use a python file main.py located in the idplusselfie_api directory to make the api call which allows us to open the source and target files, convert them to base64 and send the payload to the api gateway.  
 
 NOTE: The SOURCE and TARGET file locations will be on your local file system and the URL is the Amazon API Gateway url generated during the creation of the project.
 
-```
-import requests
-from base64 import b64encode
-from json import dumps
 
-SOURCE = '<Selfie>.png'
-TARGET = <ID Image>.png'
-URL = "https://<your api gateway>.execute-api.<region>.amazonaws.com/<deployment slot>/spi"
-ENCODING = 'utf-8'
-JSON_NAME = 'output.json'
-
-# first: reading the binary stuff
-with open(SOURCE, 'rb') as source_file:
-    s_byte_content = source_file.read()
-with open(TARGET, 'rb') as target_file:
-    t_byte_content = target_file.read()
-
-# second: base64 encode read data
-s_base64_bytes = b64encode(s_byte_content)
-t_base64_bytes = b64encode(t_byte_content)
-
-# third: decode these bytes to text
-s_base64_string = s_base64_bytes.decode(ENCODING)
-t_base64_string = t_base64_bytes.decode(ENCODING)
-
-# make raw data for json
-raw_data = {
-    "selfie": s_base64_string,
-    "dl": t_base64_string
-}
-
-# now: encoding the data to json
-json_data = dumps(raw_data, indent=2)
-
-response = requests.post(url=URL, json=json_data)
-response.raise_for_status()
-
-print("Status Code", response.status_code)
-print("Body ", response.json())
-
-```
 
 Clean Up
 We used the AWS CDK to build this project, therefore we can open our project locally and issue the AWS CDK command to clean up the resources.
