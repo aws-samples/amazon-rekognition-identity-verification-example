@@ -5,7 +5,7 @@ A solution to digitally verfiy a users identity using Amazon Rekognition.
 
 Source                     | Target
 :-------------------------:|:-------------------------:
-![Source](../amazon-rekognition-identity-verification-example/Documentation/readme_images/idplusselfie_dl.jpg) | ![Target](../amazon-rekognition-identity-verification-example/Documentation/readme_images/idplusselfie_selfie.png)
+![Source](../amazon-rekognition-identity-verification-example/Documentation/readme_images/JohnDoe-DL.jpg) | ![Target](../amazon-rekognition-identity-verification-example/Documentation/readme_images/JohnDoe-Selfie.jpg)
 ## Flow
 A user submits an POST call to a REST api with the source and target. Source being the selfie and target
 the users drivers license.  Identity matching occurs on the backend and a confidence percentage is returned.
